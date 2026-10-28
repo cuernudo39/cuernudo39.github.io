@@ -504,7 +504,7 @@
     <div class="cards">
 
         <div class="card">
-            <h3/h3>
+            <h3>📧 Correo</h3>
             <p>bioplant@gmail.com</p>
         </div>
 
@@ -534,28 +534,89 @@
 
 <script>
 
-fetch("https://script.google.com/macros/s/AKfycbwmSkgryv69rIsqycWK5E_IKD0zacCUM0WRy-O-fihIJrWVy-oru2HEPIQMeRCH2PhD/exec", {
+document.getElementById("formularioBioPlant")
+.addEventListener("submit", function(event){
 
-    method: "POST",
+    event.preventDefault();
 
-    body: JSON.stringify({
+    const Nombre =
+        document.getElementById("Nombre").value;
 
-        Nombre: document.getElementById("Nombre").value,
-        Correo: document.getElementById("Correo").value,
-        Telefono: document.getElementById("Telefono").value,
-        Edad: document.getElementById("Edad").value,
-        Tipo: document.getElementById("Tipo").value,
-        Comentario: document.getElementById("Comentario").value
+    const Correo =
+        document.getElementById("Correo").value;
+
+    const Telefono =
+        document.getElementById("Telefono").value;
+
+    const Edad =
+        document.getElementById("Edad").value;
+
+    const Tipo =
+        document.getElementById("Tipo").value;
+
+    const Comentario =
+        document.getElementById("Comentario").value;
+
+    const password =
+        document.getElementById("password").value;
+
+    const confirmar =
+        document.getElementById("confirmar").value;
+
+    const mensaje =
+        document.getElementById("mensajeConfirmacion");
+
+    if(password !== confirmar){
+
+        mensaje.style.color = "red";
+
+        mensaje.textContent =
+            "Las contraseñas no coinciden.";
+
+        return;
+    }
+
+    fetch("https://script.google.com/macros/s/AKfycbwmSkgryv69rIsqycWK5E_IKD0zacCUM0WRy-O-fihIJrWVy-oru2HEPIQMeRCH2PhD/exec",{
+
+        method:"POST",
+
+        mode:"no-cors",
+
+        body: JSON.stringify({
+
+            Nombre: Nombre,
+            Correo: Correo,
+            Telefono: Telefono,
+            Edad: Edad,
+            Tipo: Tipo,
+            Comentario: Comentario
+
+        })
 
     })
 
-})
-.then(() => {
+    .then(() => {
 
-    mensaje.style.color = "#2e7d32";
+        mensaje.style.color = "#2e7d32";
 
-    mensaje.textContent =
-        "¡Gracias " + nombre + "! Tu formulario se envió correctamente.";
+        mensaje.textContent =
+            "¡Gracias " + Nombre +
+            "! Tu formulario fue enviado correctamente.";
+
+        document.getElementById("formularioBioPlant").reset();
+
+    })
+
+    .catch(error => {
+
+        mensaje.style.color = "red";
+
+        mensaje.textContent =
+            "Error al enviar el formulario.";
+
+        console.error(error);
+
+    });
 
 });
 
